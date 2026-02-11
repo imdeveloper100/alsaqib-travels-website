@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Compass, Menu, X, Phone, MessageCircle } from "lucide-react";
+import { Compass, Menu, X, LogIn, MessageCircle } from "lucide-react";
 
 const navLinks = [
   { name: "Home", href: "" },
@@ -13,9 +13,15 @@ const navLinks = [
   { name: "Contact Us", href: "contact-us" },
 ];
 
+const DASHBOARD_URL = "https://travel-agency-dashboard-nu-six.vercel.app/";
+
 // WhatsApp contact details
 const WHATSAPP_NUMBER = "+923085661668";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=Hello%20Al%20Saqib%20Travels!%20I%20would%20like%20to%20inquire%20about%20your%20services.`;
+
+const openDashboard = () => {
+  window.open(DASHBOARD_URL, "_blank", "noopener,noreferrer");
+};
 
 const openWhatsApp = () => {
   window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
@@ -46,25 +52,29 @@ export default function Navbar() {
               className="flex items-center gap-1.5 group"
               onClick={closeMenu}
             >
+              <img src="/logo.jpeg" alt="Al Saqib Travels" className="size-8" />
               <span className="text-xl font-bold text-primary-dark group-hover:text-accent-dark transition-colors">
-                Travel
+                Al Saqib Travels
               </span>
-              <Compass className="h-5 w-5 text-primary-dark group-hover:text-accent-dark transition-colors group-hover:rotate-45 duration-300" />
+              {/* <Compass className="h-5 w-5 text-primary-dark group-hover:text-accent-dark transition-colors group-hover:rotate-45 duration-300" /> */}
             </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex flex-1 justify-center">
               <nav className="flex items-center gap-8">
                 {navLinks.map((link) => {
-                  const isActive = pathname === `/${link.href}` || pathname.startsWith(`/${link.href}/`);
+                  const isActive =
+                    pathname === `/${link.href}` ||
+                    pathname.startsWith(`/${link.href}/`);
                   return (
                     <Link
                       key={link.name}
                       href={`/${link.href}`}
-                      className={`text-sm font-medium transition-all duration-300 ${isActive
-                        ? "text-accent-dark underline underline-offset-4 decoration-2"
-                        : "text-foreground hover:text-accent-dark hover:underline hover:underline-offset-4 decoration-2 hover:scale-105"
-                        }`}
+                      className={`text-sm font-medium transition-all duration-300 ${
+                        isActive
+                          ? "text-accent-dark underline underline-offset-4 decoration-2"
+                          : "text-foreground hover:text-accent-dark hover:underline hover:underline-offset-4 decoration-2 hover:scale-105"
+                      }`}
                     >
                       {link.name}
                     </Link>
@@ -73,19 +83,15 @@ export default function Navbar() {
               </nav>
             </div>
 
-            {/* Contact Button - Desktop */}
+            {/* Login Button - Desktop */}
             <button
-              onClick={openWhatsApp}
+              onClick={openDashboard}
               onMouseEnter={() => setIsContactHovered(true)}
               onMouseLeave={() => setIsContactHovered(false)}
               className="hidden md:flex items-center gap-2 rounded-full bg-primary-dark px-6 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-accent-dark hover:scale-105 hover:shadow-lg cursor-pointer group/contact"
             >
-              {isContactHovered ? (
-                <MessageCircle className="h-4 w-4 transition-transform duration-300 group-hover/contact:scale-110" />
-              ) : (
-                <Phone className="h-4 w-4 transition-transform duration-300 group-hover/contact:scale-110" />
-              )}
-              <span className="transition-all duration-300">Contact</span>
+              <LogIn className="h-4 w-4 transition-transform duration-300 group-hover/contact:scale-110" />
+              <span className="transition-all duration-300">Login</span>
             </button>
 
             {/* Mobile Menu Button */}
@@ -109,35 +115,46 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-4 py-4">
               <div className="flex flex-col space-y-4">
                 {navLinks.map((link) => {
-                  const isActive = pathname === `/${link.href}` || pathname.startsWith(`/${link.href}/`);
+                  const isActive =
+                    pathname === `/${link.href}` ||
+                    pathname.startsWith(`/${link.href}/`);
                   return (
                     <Link
                       key={link.name}
                       href={`/${link.href}`}
                       onClick={closeMenu}
-                      className={`px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ${isActive
-                        ? "text-accent-dark bg-gray-50 pl-6"
-                        : "text-foreground hover:text-accent-dark hover:bg-gray-50 hover:pl-6"
-                        }`}
+                      className={`px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ${
+                        isActive
+                          ? "text-accent-dark bg-gray-50 pl-6"
+                          : "text-foreground hover:text-accent-dark hover:bg-gray-50 hover:pl-6"
+                      }`}
                     >
                       {link.name}
                     </Link>
                   );
                 })}
-                <div className="pt-2 border-t border-gray-100">
+                <div className="pt-2 border-t border-gray-100 space-y-3">
+                  <button
+                    onClick={() => {
+                      closeMenu();
+                      openDashboard();
+                    }}
+                    className="flex items-center justify-center gap-2 w-full rounded-full bg-primary-dark px-6 py-3 text-base font-medium text-white transition-all duration-300 hover:bg-accent-dark hover:scale-[1.02] cursor-pointer"
+                  >
+                    <LogIn className="h-5 w-5 transition-transform duration-300" />
+                    Login
+                  </button>
                   <button
                     onClick={() => {
                       closeMenu();
                       openWhatsApp();
                     }}
-                    onMouseEnter={() => setIsContactHovered(true)}
-                    onMouseLeave={() => setIsContactHovered(false)}
-                    className="flex items-center justify-center gap-2 w-full rounded-full bg-primary-dark px-6 py-3 text-base font-medium text-white transition-all duration-300 hover:bg-accent-dark hover:scale-[1.02] cursor-pointer"
+                    className="flex items-center justify-center gap-2 w-full rounded-lg border border-gray-200 px-6 py-2.5 text-sm font-medium text-foreground hover:bg-gray-50 transition-colors cursor-pointer"
                   >
-                    <MessageCircle className="h-5 w-5 transition-transform duration-300" />
+                    <MessageCircle className="h-4 w-4" />
                     Chat on WhatsApp
                   </button>
-                  <p className="text-xs text-gray-500 text-center mt-2">
+                  <p className="text-xs text-gray-500 text-center">
                     +92 308 5661668
                   </p>
                 </div>
