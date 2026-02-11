@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Compass, Menu, X, LogIn, MessageCircle } from "lucide-react";
@@ -52,7 +53,7 @@ export default function Navbar() {
               className="flex items-center gap-1.5 group"
               onClick={closeMenu}
             >
-              <img src="/logo.jpeg" alt="Al Saqib Travels" className="size-8" />
+              <Image src="/logo.jpeg" alt="Al Saqib Travels" width={32} height={32} className="size-8" />
               <span className="text-xl font-bold text-primary-dark group-hover:text-accent-dark transition-colors">
                 Al Saqib Travels
               </span>
